@@ -1,4 +1,4 @@
-package com.prashanth.spring.distributedlocks;
+package com.prashanth.spring.distributed.locks;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
