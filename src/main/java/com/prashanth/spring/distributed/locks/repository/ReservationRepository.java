@@ -2,11 +2,14 @@ package com.prashanth.spring.distributed.locks.repository;
 
 import com.prashanth.spring.distributed.locks.model.Reservation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +27,16 @@ public class ReservationRepository {
             return Optional.ofNullable(reservationList.iterator().next());
         }
         return Optional.empty();
+    }
+
+    Reservation update(Reservation reservation) {
+        return  jdbcTemplate.execute("update reservation set name = ? where id = ?", new PreparedStatementCallback<Reservation>() {
+            @Override
+            public Reservation doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+                ps.setString(1, reservation.getName());
+                ps.setInt(2, reservation.getId());
+                return findById(reservation.getId()).get();
+            }
+        });
     }
 }
