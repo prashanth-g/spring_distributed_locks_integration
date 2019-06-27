@@ -21,7 +21,7 @@ public class ReservationRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    Optional<Reservation> findById(Integer id) {
+    public Optional<Reservation> findById(Integer id) {
         List<Reservation> reservationList = jdbcTemplate.query("select * from reservation where id = ?", this.rowMapper, id);
         if(reservationList.size() > 0) {
             return Optional.ofNullable(reservationList.iterator().next());
@@ -29,7 +29,7 @@ public class ReservationRepository {
         return Optional.empty();
     }
 
-    Reservation update(Reservation reservation) {
+    public Reservation update(Reservation reservation) {
         return  jdbcTemplate.execute("update reservation set name = ? where id = ?", new PreparedStatementCallback<Reservation>() {
             @Override
             public Reservation doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {

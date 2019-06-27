@@ -17,4 +17,12 @@ public class LockedResourceRestController {
     Reservation update(@PathVariable Integer id, @PathVariable String name, @PathVariable Long time) {
         return null;
     }
+
+    Reservation doUpdateFor(Integer id, String name) {
+        reservationRepository.findById(id).ifPresent(r -> {
+            r.setName(name);
+            reservationRepository.update(r);
+        });
+        return reservationRepository.findById(id).get();
+    }
 }
