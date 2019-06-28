@@ -15,7 +15,7 @@ public class LockedResourceRestController {
 
     @GetMapping("/update/{id}/{name}/{time}")
     Reservation update(@PathVariable Integer id, @PathVariable String name, @PathVariable Long time) {
-        return null;
+        return doUpdateFor(id, name);
     }
 
     Reservation doUpdateFor(Integer id, String name) {
