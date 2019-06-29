@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 public class DistributedLocks {
+
     public static void main(String[] args) {
         SpringApplication.run(DistributedLocks.class, args);
     }
