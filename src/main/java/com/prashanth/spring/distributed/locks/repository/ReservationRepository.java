@@ -23,18 +23,19 @@ public class ReservationRepository {
 
     public Optional<Reservation> findById(Integer id) {
         List<Reservation> reservationList = jdbcTemplate.query("select * from reservation where id = ?", this.rowMapper, id);
-        if(reservationList.size() > 0) {
+        if (reservationList.size() > 0) {
             return Optional.ofNullable(reservationList.iterator().next());
         }
         return Optional.empty();
     }
 
     public Reservation update(Reservation reservation) {
-        return  jdbcTemplate.execute("update reservation set name = ? where id = ?", new PreparedStatementCallback<Reservation>() {
+        return jdbcTemplate.execute("update reservation set name = ? where id = ?", new PreparedStatementCallback<Reservation>() {
             @Override
             public Reservation doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
                 ps.setString(1, reservation.getName());
                 ps.setInt(2, reservation.getId());
+                ps.execute();
                 return findById(reservation.getId()).get();
             }
         });
