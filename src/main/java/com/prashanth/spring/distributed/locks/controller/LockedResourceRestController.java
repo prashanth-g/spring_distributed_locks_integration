@@ -21,7 +21,7 @@ public class LockedResourceRestController {
 
     @SneakyThrows
     @GetMapping("/update/{id}/{name}/{time}")
-    Reservation update(@PathVariable Integer id, @PathVariable String name, @PathVariable Long time) {
+    public Reservation update(@PathVariable Integer id, @PathVariable String name, @PathVariable Long time) {
         String key = Integer.toString(id);
         Lock lock = lockRegistry.obtain(key);
         boolean lockAcquired = lock.tryLock(1, TimeUnit.SECONDS);
